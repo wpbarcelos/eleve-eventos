@@ -86,13 +86,7 @@ class EventSubscribeResource extends Resource
                 // Tables\Columns\TextColumn::make('email')
                 //     ->searchable(),
                 Tables\Columns\ToggleColumn::make('paid')
-                    ->disabled(function($data){
-                        if( $data->event->price > 0 ){
-                            return false;
-                        }
-
-                        return true;
-                    }),
+                    ->disabled(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
