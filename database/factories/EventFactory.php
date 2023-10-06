@@ -16,8 +16,13 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $date_start = now()->addDays( rand(10, 30));
         return [
-            //
+            'name'=> fake()->sentence(3),
+            'description'=> fake()->paragraph(1),
+            'price'=> fake()->randomElement([0, 20, 50]),
+            'date_start'=> $date_start,
+            'date_end'=> $date_start,
         ];
     }
 }

@@ -17,7 +17,12 @@ class EventSubscribeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name'=> fake()->name,
+            'date_birth'=> fake()->date('Y-m-d', now()->subYears(10)),
+            'gender'=> fake()->randomElement(['F','M']),
+            'phone'=> fake()->phoneNumber(),
+            'email'=> fake()->safeEmail(),
+            'paid'=> fake()->boolean(70),
         ];
     }
 }
