@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('event_date_subscribes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\EventDate::class)->constrained();
-            $table->foreignIdFor(\App\Models\EventSubscribe::class)->constrained();
-            $table->enum('present',['y','n']);
+            $table->foreignIdFor(\App\Models\EventDate::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\EventSubscribe::class)->constrained()->cascadeOnDelete();
+            $table->boolean('present')->default(1);
             $table->timestamps();
         });
     }

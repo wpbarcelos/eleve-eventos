@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\EventDateSubscribeResource\RelationManagers\SubscribesRelationManager;
 use App\Filament\Resources\EventSubscribeResource\Pages;
 use App\Filament\Resources\EventSubscribeResource\RelationManagers;
 use App\Models\EventSubscribe;
@@ -112,7 +113,6 @@ class EventSubscribeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 

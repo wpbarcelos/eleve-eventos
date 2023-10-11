@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EventDateResource\Pages;
 use App\Filament\Resources\EventDateResource\RelationManagers;
+use App\Filament\Resources\EventDateSubscribeResource\RelationManagers\SubscribesRelationManager;
 use App\Models\EventDate;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -27,7 +28,8 @@ class EventDateResource extends Resource
                     ->relationship('event', 'name')
                     ->required(),
                 Forms\Components\DatePicker::make('date')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord:true),
             ]);
     }
 
@@ -39,7 +41,7 @@ class EventDateResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
-                    ->date()
+                    ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -62,14 +64,14 @@ class EventDateResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
-            //
+            SubscribesRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -77,5 +79,5 @@ class EventDateResource extends Resource
             'create' => Pages\CreateEventDate::route('/create'),
             'edit' => Pages\EditEventDate::route('/{record}/edit'),
         ];
-    }    
+    }
 }
