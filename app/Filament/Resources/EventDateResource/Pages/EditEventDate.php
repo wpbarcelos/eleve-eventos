@@ -31,6 +31,8 @@ class EditEventDate extends Page implements HasForms
 
     public ?array $data = [];
 
+    public $eventDate;
+
 
     protected static string $view = 'filament.resources.event-date-resource.pages.edit-event-date';
 
@@ -38,6 +40,8 @@ class EditEventDate extends Page implements HasForms
     public function mount(EventDate $record)
     {
         $data = $record->attributesToArray();
+
+        $this->eventDate = $data['id'];
 
         $this->form->fill($data);
 

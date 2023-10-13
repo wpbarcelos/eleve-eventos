@@ -15,10 +15,10 @@ class EventDateSubscribe extends Model
 
     public function subscribe(): BelongsTo
     {
-        return $this->belongsTo(EventSubscribe::class);
+        return $this->belongsTo(EventSubscribe::class, 'event_subscribe_id');
     }
     public function eventdate(): BelongsTo
     {
-        return $this->belongsTo(EventDate::class);
+        return $this->belongsTo(EventDate::class,'event_date_id');
     }
 }
