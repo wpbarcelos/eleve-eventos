@@ -77,7 +77,7 @@ class EventDateResource extends Resource
         return [
             'index' => Pages\ListEventDates::route('/'),
             'create' => Pages\CreateEventDate::route('/create'),
-            'edit' => Pages\EditEventDate::route('/{record}/edit'),
+            'edit'=> Pages\EditEventDate::route('{record}/edit'),
         ];
     }
 }
