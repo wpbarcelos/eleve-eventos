@@ -8,6 +8,10 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListEventSubscribes extends ListRecords
 {
+    protected static ?string $header = 'Inscritos';
+
+
+
     protected static string $resource = EventSubscribeResource::class;
 
     protected function getHeaderActions(): array

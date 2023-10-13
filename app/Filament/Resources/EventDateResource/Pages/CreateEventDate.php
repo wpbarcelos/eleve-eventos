@@ -28,5 +28,9 @@ class CreateEventDate extends CreateRecord
         });
     }
 
+    public function getTitle(): string
+    {
+        return 'Nova lista de presença';
+    }
 
 }

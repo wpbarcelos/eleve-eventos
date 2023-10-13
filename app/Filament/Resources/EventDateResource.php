@@ -16,9 +16,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventDateResource extends Resource
 {
+
+    protected static ?int $navigationSort = 3000;
+    protected static ?string $navigationLabel = 'Lista de Presença';
+
     protected static ?string $model = EventDate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-check';
 
     public static function form(Form $form): Form
     {

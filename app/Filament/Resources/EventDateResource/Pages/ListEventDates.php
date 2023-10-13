@@ -16,4 +16,9 @@ class ListEventDates extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    public function getTitle(): string
+    {
+        return 'Listas de presença';
+    }
 }

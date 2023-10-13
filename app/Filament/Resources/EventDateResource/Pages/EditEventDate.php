@@ -95,4 +95,9 @@ class EditEventDate extends Page implements HasForms
             ->title(__('filament-panels::resources/pages/edit-record.notifications.saved.title'))
             ->send();
     }
+
+    public function getTitle(): string
+    {
+        return 'Editar lista de presença';
+    }
 }

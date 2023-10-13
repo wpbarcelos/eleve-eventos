@@ -18,9 +18,15 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventSubscribeResource extends Resource
 {
+
+    protected static ?int $navigationSort = 2000;
+
+    protected static ?string $navigationLabel = 'Inscritos';
+
     protected static ?string $model = EventSubscribe::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
 
     public static function form(Form $form): Form
     {

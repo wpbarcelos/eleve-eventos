@@ -15,9 +15,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventResource extends Resource
 {
+    protected static ?int $navigationSort = 1000;
+
+    protected static ?string $navigationLabel = 'Eventos';
+
     protected static ?string $model = Event::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
     public static function form(Form $form): Form
     {
@@ -69,17 +73,6 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('subscribe_until')
                     ->dateTime('d/m/Y')
                     ->sortable(),
-                // Tables\Columns\TextColumn::make('limit_subscribe')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('created_at')
-                //     ->dateTime()
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: true),
-                // Tables\Columns\TextColumn::make('updated_at')
-                //     ->dateTime()
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
