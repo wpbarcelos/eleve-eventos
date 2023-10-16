@@ -22,6 +22,7 @@ class EventSubscribeResource extends Resource
     protected static ?int $navigationSort = 2000;
 
     protected static ?string $navigationLabel = 'Inscritos';
+    protected static ?string $label = 'Inscritos';
 
     protected static ?string $model = EventSubscribe::class;
 
@@ -37,16 +38,19 @@ class EventSubscribeResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('event_id')
                             ->relationship('event', 'name')
-                            ->required(),
+                            ->required()
+                            ->label('Evento'),
                         Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->label('Nome'),
                         Forms\Components\DatePicker::make('date_birth')
-                            ->required(),
+                            ->required()
+                            ->label('Data Nascimento'),
                         Forms\Components\Radio::make('gender')
                             ->required()
                             ->options(['m' => 'Masculino', 'f' => 'Feminino'])
-                            ,
+                            ->label('Sexo'),
 
                     ]),
                     Section::make()
@@ -54,6 +58,7 @@ class EventSubscribeResource extends Resource
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('phone')
+                        ->label('Telefone')
                         ->helperText('Digite somente os numeros')
                             ->tel()
                             ->maxLength(255)
@@ -61,6 +66,7 @@ class EventSubscribeResource extends Resource
                                     $input.startsWith('2') ||  $input.startsWith('(2')? '(99)99999-9999' : '99999-9999'
                                 JS)),
                         Forms\Components\TextInput::make('email')
+                            ->label('E-mail')
                             ->email()
                             ->maxLength(255),
 
@@ -69,6 +75,7 @@ class EventSubscribeResource extends Resource
                     ->description('Financeiro')
                     ->schema([
                         Forms\Components\Toggle::make('paid')
+                        ->label('Pago')
                         ->required()
                     ]),
             ]);
@@ -80,21 +87,31 @@ class EventSubscribeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('event.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable()
+                    ->label('Evento'),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('date_birth')
                 //     ->date()
                 //     ->sortable(),
-                // Tables\Columns\TextColumn::make('gender')
-                //     ->searchable(),
+                Tables\Columns\TextColumn::make('gender')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable()
+                    ->label('Sexo'),
                 Tables\Columns\TextColumn::make('phone')
+                    ->label('Telefone')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable()
                     ->searchable(),
                 // Tables\Columns\TextColumn::make('email')
                 //     ->searchable(),
                 Tables\Columns\ToggleColumn::make('paid')
+                    ->label('Pago')
                     ->disabled(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Criado em')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

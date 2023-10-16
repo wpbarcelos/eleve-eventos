@@ -14,7 +14,7 @@ class SubscribesRelationManager extends RelationManager
 {
     public ?string $pageClass = 'EventDateSubscribe';
     protected static string $relationship = 'datesubscribes';
-
+    protected static ?string $recordTitleAttribute = 'event_subscribe_id';
 
     public function mount(): void
     {
@@ -47,28 +47,35 @@ class SubscribesRelationManager extends RelationManager
                         EventSubscribe::where('event_id', $eventId)
                             ->pluck('name', 'id')
                     )
-                    ->unique(ignoreRecord: true),
-                Forms\Components\Toggle::make('present'),
+                    ->unique(ignoreRecord: true)
+                    ->label('Inscrito'),
+                Forms\Components\Toggle::make('present')
+                ->label('Presença'),
             ]);
     }
 
     public function table(Table $table): Table
     {
 
+        $table->recordTitle('aaaaaaaa');
 
-        return $table
-            ->recordTitleAttribute('Subscribes')
+        return $table->heading('Inscritos')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\ViewColumn::make('subscribe')
-                    ->view('tables.columns.event-date-subscribe'),
-                Tables\Columns\ToggleColumn::make('present'),
+                // Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('subscribe.name')
+                    ->label('Nome')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\ToggleColumn::make('present')
+                    ->label('Presença')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make()
+                // ->label('Adicionar Inscritos'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
@@ -78,6 +85,7 @@ class SubscribesRelationManager extends RelationManager
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
-            ]);
+            ])
+            ->paginationPageOptions([25,50,100,'all']);
     }
 }

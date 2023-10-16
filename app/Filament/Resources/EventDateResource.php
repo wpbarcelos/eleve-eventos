@@ -18,11 +18,13 @@ class EventDateResource extends Resource
 {
 
     protected static ?int $navigationSort = 3000;
-    protected static ?string $navigationLabel = 'Lista de Presença';
+
+    protected static ?string $navigationLabel = 'Lista de presença';
+    protected static ?string $label = 'Lista de presença';
 
     protected static ?string $model = EventDate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-check';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -32,8 +34,7 @@ class EventDateResource extends Resource
                     ->relationship('event', 'name')
                     ->required(),
                 Forms\Components\DatePicker::make('date')
-                    ->required()
-                    ->unique(ignoreRecord:true),
+                    ->required(),
             ]);
     }
 
@@ -45,7 +46,7 @@ class EventDateResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date')
-                    ->date('d/m/Y')
+                    ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -81,7 +82,7 @@ class EventDateResource extends Resource
         return [
             'index' => Pages\ListEventDates::route('/'),
             'create' => Pages\CreateEventDate::route('/create'),
-            'edit'=> Pages\EditEventDate::route('{record}/edit'),
+            'edit' => Pages\EditEventDate::route('/{record}/edit'),
         ];
     }
 }

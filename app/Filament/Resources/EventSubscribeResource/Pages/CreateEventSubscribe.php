@@ -8,5 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateEventSubscribe extends CreateRecord
 {
+    public function getTitle(): string
+    {
+        return 'Cadastro de Inscrito';
+    }
     protected static string $resource = EventSubscribeResource::class;
 }

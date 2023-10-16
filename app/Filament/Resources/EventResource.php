@@ -6,6 +6,7 @@ use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Event;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -19,6 +20,8 @@ class EventResource extends Resource
 
     protected static ?string $navigationLabel = 'Eventos';
 
+    protected static ?string $label = 'Eventos';
+
     protected static ?string $model = Event::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
@@ -29,23 +32,40 @@ class EventResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Nome'),
                 Forms\Components\TextInput::make('description')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Descrição'),
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
                     ->default(0.00)
-                    ->prefix('R$'),
+                    ->prefix('R$')
+                    ->label('Valor'),
+                Forms\Components\DatePicker::make('date_start')
+                ->label('Início'),
+                Forms\Components\DatePicker::make('date_end')
+                ->label('Término'),
                 Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\DatePicker::make('date_start'),
-                Forms\Components\DatePicker::make('date_end'),
-                Forms\Components\DateTimePicker::make('subscribe_start'),
-                Forms\Components\DateTimePicker::make('subscribe_until'),
-                Forms\Components\TextInput::make('limit_subscribe')
-                    ->numeric(),
+                    ->image()
+                    ->label('Imagem'),
+
+
+                Section::make('Inscrição')
+                ->columns(3)
+                ->schema([
+                    Forms\Components\DateTimePicker::make('subscribe_start')
+                    ->label('Início'),
+                    Forms\Components\DateTimePicker::make('subscribe_until')
+                    ->label('Término'),
+                    Forms\Components\TextInput::make('limit_subscribe')
+                    ->numeric()
+                    ->label('Limite de vagas'),
+                ]),
+
+
             ]);
     }
 
@@ -54,25 +74,35 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Nome'),
                 // Tables\Columns\TextColumn::make('description')
                     // ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->money('BRL')
-                    ->sortable(),
-                Tables\Columns\ImageColumn::make('image')->size(70),
+                    ->sortable()
+                    ->label('Valor'),
+                Tables\Columns\ImageColumn::make('image')->size(70)
+                    ->label('Imagem'),
                 Tables\Columns\TextColumn::make('date_start')
                     ->date('d/m/Y')
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Início'),
                 Tables\Columns\TextColumn::make('date_end')
                     ->date('d/m/Y')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('subscribe_start')
-                    ->dateTime('d/m/Y')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('subscribe_until')
-                    ->dateTime('d/m/Y')
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Término'),
+                Tables\Columns\TextColumn::make('subscribes_count')
+                    ->counts('subscribes')
+                    ->label('Inscritos')
+                    ->sortable()
+
+                // Tables\Columns\TextColumn::make('subscribe_start')
+                //     ->dateTime('d/m/Y')
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('subscribe_until')
+                //     ->dateTime('d/m/Y')
+                //     ->sortable(),
             ])
             ->filters([
                 //
