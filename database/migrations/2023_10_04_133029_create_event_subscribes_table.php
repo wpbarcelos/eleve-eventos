@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('event_subscribes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Event::class)->constrained();
+            $table->foreignIdFor(\App\Models\Event::class)->constrained()
+                ->cascadeOnDelete();
             $table->string('name');
             $table->date('date_birth');
             $table->string('gender');

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('event_dates', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Event::class)->constrained();
+            $table->foreignIdFor(\App\Models\Event::class)->constrained()->onDelete('cascade');
             $table->date('date');
             $table->timestamps();
         });

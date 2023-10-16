@@ -29,6 +29,8 @@ class SubscribesRelationManager extends RelationManager
             EventDateSubscribe::firstOrCreate([
                 'event_date_id' => $eventDate->id,
                 'event_subscribe_id' => $event_subscribe->id,
+            ],[
+                'present'=> 0
             ]);
 
         });
