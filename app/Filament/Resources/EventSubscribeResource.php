@@ -51,15 +51,34 @@ class EventSubscribeResource extends Resource
                             ->required()
                             ->options(['m' => 'Masculino', 'f' => 'Feminino'])
                             ->label('Sexo'),
+                        Forms\Components\Select::make('congregation_id')
+                            ->relationship('congregation', 'name')
+                            ->required()
+                            ->label('Congregação')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->label('Nome da Congregação')
+                            ]),
+
+                        Forms\Components\Select::make('role_id')
+                            ->relationship('role', 'name')
+                            ->required()
+                            ->label('Cargo')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->label('Nome do cargo')
+                            ]),
 
                     ]),
-                    Section::make()
+                Section::make()
                     ->description('Contato')
                     ->columns(2)
                     ->schema([
                         Forms\Components\TextInput::make('phone')
-                        ->label('Telefone')
-                        ->helperText('Digite somente os numeros')
+                            ->label('Telefone')
+                            ->helperText('Digite somente os numeros')
                             ->tel()
                             ->maxLength(255)
                             ->mask(RawJs::make(<<<'JS'
@@ -71,12 +90,12 @@ class EventSubscribeResource extends Resource
                             ->maxLength(255),
 
                     ]),
-                    Section::make()
+                Section::make()
                     ->description('Financeiro')
                     ->schema([
                         Forms\Components\Toggle::make('paid')
-                        ->label('Pago')
-                        ->required()
+                            ->label('Pago')
+                            ->required()
                     ]),
             ]);
     }
@@ -135,8 +154,7 @@ class EventSubscribeResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-        ];
+        return [];
     }
 
     public static function getPages(): array

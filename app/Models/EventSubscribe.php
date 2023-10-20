@@ -16,4 +16,15 @@ class EventSubscribe extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+
+    public function congregation(): BelongsTo
+    {
+        return  $this->belongsTo(Congregation::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return  $this->belongsTo(Role::class);
+    }
 }
