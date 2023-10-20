@@ -70,6 +70,40 @@ class EventSubscribeResource extends Resource
                                     ->required()
                                     ->label('Nome do cargo')
                             ]),
+                        Forms\Components\Select::make('celulas')
+                            ->relationship('celulas', 'name')
+                            ->label('Célula(s)')
+                            ->multiple()
+                            ->preload()
+                            ->createOptionForm([
+                                Section::make('Cadastro de Nova célula')
+                                ->schema([
+                                    Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->label('Nome da célula'),
+                                Forms\Components\TextInput::make('owner')
+                                    ->label('Responsável'),
+                                    Forms\Components\TextInput::make('schedule')
+                                    ->label('Horário')
+                                    ->helperText('Exemplo: Sexta-feira 19:30h'),
+                                Forms\Components\TextInput::make('description')
+                                    ->label('Descrição')
+                                    ->columnspan('2'),
+                                Forms\Components\FileUpload::make('image')
+                                    ->image()
+                                    ->label('Imagem'),
+                                Forms\Components\TextInput::make('address')
+                                    ->helperText('Exemplo: Manoel Lopes 215, Taquara II')
+                                    ->label('Endereço')
+                                    ->columnspan('3'),
+                                ])->columns(3)
+                            ]),
+
+                        // Forms\Components\CheckboxList::make('celulas')
+                        //     ->relationship('celulas','name')
+                        //     ->label('Células')
+                        //     ->columnspan(2)
+                        //     ->columns(2)
 
                     ]),
                 Section::make()
