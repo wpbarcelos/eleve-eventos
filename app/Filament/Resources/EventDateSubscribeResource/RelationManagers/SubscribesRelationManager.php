@@ -64,9 +64,11 @@ class SubscribesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
 
+        $table->recordTitle('presença');
 
         return $table->heading('Inscritos')
             ->columns([
+                // Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('subscribe.name')
                     ->label('Nome')
                     ->sortable()
