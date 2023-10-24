@@ -44,11 +44,11 @@ class SubscribesRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('event_subscribe_id')
                     ->required()
+                    ->disabled()
                     ->options(
                         EventSubscribe::where('event_id', $eventId)
                             ->pluck('name', 'id')
                     )
-                    ->unique(ignoreRecord: true)
                     ->label('Inscrito'),
                 Forms\Components\Toggle::make('present')
                     ->label('Presença')
