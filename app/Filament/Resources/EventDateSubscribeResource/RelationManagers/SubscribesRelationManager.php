@@ -10,6 +10,7 @@ use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class SubscribesRelationManager extends RelationManager
 {
@@ -79,7 +80,11 @@ class SubscribesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('justification')
                     ->label('Justificativa')
                     ->sortable()
-                    ->words(5)
+                    ->getStateUsing(function(Model $record){
+                        if( $record->present) return '';
+
+                        return $record->justification;
+                    })
                     ->tooltip(function(Tables\Columns\TextColumn $column) {
                         $state = $column->getState();
                         if( empty($state)){
