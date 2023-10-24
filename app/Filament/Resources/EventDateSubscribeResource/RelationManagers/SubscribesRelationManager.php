@@ -6,6 +6,7 @@ use App\Models\EventDateSubscribe;
 use App\Models\EventSubscribe;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -29,12 +30,10 @@ class SubscribesRelationManager extends RelationManager
             EventDateSubscribe::firstOrCreate([
                 'event_date_id' => $eventDate->id,
                 'event_subscribe_id' => $event_subscribe->id,
-            ],[
-                'present'=> 0
+            ], [
+                'present' => 0
             ]);
-
         });
-
     }
 
 
@@ -52,7 +51,13 @@ class SubscribesRelationManager extends RelationManager
                     ->unique(ignoreRecord: true)
                     ->label('Inscrito'),
                 Forms\Components\Toggle::make('present')
-                ->label('Presença'),
+                    ->label('Presença')
+                    ->live(),
+                Forms\Components\TextInput::make('justification')
+                    ->hidden(fn (Get $get): bool => !!$get('present'))
+                    ->label('Justificativa')
+                    ->maxLength(190)
+                    ->columnSpanFull()
             ]);
     }
 
@@ -71,6 +76,17 @@ class SubscribesRelationManager extends RelationManager
                 Tables\Columns\ToggleColumn::make('present')
                     ->label('Presença')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('justification')
+                    ->label('Justificativa')
+                    ->sortable()
+                    ->words(5)
+                    ->tooltip(function(Tables\Columns\TextColumn $column) {
+                        $state = $column->getState();
+                        if( empty($state)){
+                            return null;
+                        }
+                        return $state;
+                    }),
             ])
             ->filters([
                 //
@@ -80,7 +96,7 @@ class SubscribesRelationManager extends RelationManager
                 // ->label('Adicionar Inscritos'),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -88,6 +104,6 @@ class SubscribesRelationManager extends RelationManager
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
             ])
-            ->paginationPageOptions([25,50,100,'all']);
+            ->paginationPageOptions([25, 50, 100, 'all']);
     }
 }
