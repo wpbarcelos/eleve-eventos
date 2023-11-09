@@ -14,6 +14,8 @@ class EventDate extends Model
 
     public  $guarded = [];
 
+    public $casts =['date'=>'date'];
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

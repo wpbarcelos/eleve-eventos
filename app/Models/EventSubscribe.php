@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EventSubscribe extends Model
 {
@@ -32,5 +33,10 @@ class EventSubscribe extends Model
     public function celulas(): BelongsToMany
     {
         return $this->belongsToMany(Celula::class,'celula_member');
+    }
+
+    public function eventdates(): HasMany
+    {
+        return $this->hasMany(EventDateSubscribe::class);
     }
 }
