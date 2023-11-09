@@ -2,6 +2,4 @@
     @livewire('present-form-filter')
 
 
-
-
 </x-filament-panels::page>
