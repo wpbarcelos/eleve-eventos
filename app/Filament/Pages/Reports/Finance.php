@@ -14,6 +14,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
@@ -38,7 +39,6 @@ class Finance extends Page implements HasForms, HasTable
     protected static string $view = 'filament.pages.reports.finance';
 
     protected static ?string $label = 'Financeiro';
-
     protected static ?string $navigationLabel = 'Financeiro';
 
     protected static ?string $inverseRelationship = 'section';
@@ -81,9 +81,36 @@ class Finance extends Page implements HasForms, HasTable
         )
             ->columns([
                 TextColumn::make('name')->sortable()->label('Nome'),
-                ToggleColumn::make('paid')->sortable()->label('Pago'),
+                TextColumn::make('phone')->sortable()->label('Telefone')
+                    ->url(fn(EventSubscribe $item) => empty($item['phone']) ? null : 'tel:' . $item['phone']),
+                CheckboxColumn::make('paid')->sortable()->label('Pago')->disabled(),
+                IconColumn::make('paid')->icon(fn(string $state) => match ($state) {
+                    '1' => 'heroicon-o-check-badge',
+                    '0' => 'heroicon-o-x-circle',
+                }),
                 TextColumn::make('event.price')->label('Valor')
             ]);
+    }
+
+    public function totalPending()
+    {
+
+        if (empty($this->data['event_id'])) {
+            return;
+        }
+        $pending = EventSubscribe::query()
+            ->where('event_id', $this->data['event_id'])
+            ->where('paid', '0')
+            ->count();
+        $amount = Event::where('id', $this->data['event_id'])
+            ->select('price')
+            ->first();
+
+        $totalPending = number_format($pending * $amount->price, 2, ',', '.');
+
+
+        return $totalPending;
+
     }
 
 
