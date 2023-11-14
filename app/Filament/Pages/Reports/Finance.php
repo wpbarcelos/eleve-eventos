@@ -98,15 +98,15 @@ class Finance extends Page implements HasForms, HasTable
         if (empty($this->data['event_id'])) {
             return;
         }
-        $pending = EventSubscribe::query()
-            ->where('event_id', $this->data['event_id'])
+        
+        $pending = EventSubscribe::where('event_id', $this->data['event_id'])
             ->where('paid', '0')
             ->count();
         $amount = Event::where('id', $this->data['event_id'])
             ->select('price')
             ->first();
 
-        $totalPending = number_format($pending * $amount->price, 2, ',', '.');
+        $totalPending = number_format($pending * (float) $amount->price, 2, ',', '.');
 
 
         return $totalPending;
