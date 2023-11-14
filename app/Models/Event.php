@@ -31,4 +31,9 @@ class Event extends Model
     {
         return $this->hasMany(EventDate::class);
     }
+
+    public function eventSubscribes():HasMany
+    {
+        return $this->hasMany(EventSubscribe::class);
+    }
 }
