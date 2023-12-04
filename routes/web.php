@@ -17,12 +17,7 @@ Route::get('export/financeiro', function(\Illuminate\Http\Request $request){
 
     $csvFileName = 'relatorio_'. Str::of($event->name)->snake(). '_financeiro.csv';
 
-    $headers = [
-        'Content-Type' => 'text/csv',
-        'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
-        'Expires'=>' 0',
-        'Pragma'=> 'no-cache'
-    ];
+
     header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
     header("Pragma: no-cache"); // HTTP 1.0.
     header("Expires: 0"); // Proxies.
@@ -35,6 +30,13 @@ Route::get('export/financeiro', function(\Illuminate\Http\Request $request){
     }
 
     fclose($handle);
+
+    $headers = [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        'Expires'=>' 0',
+        'Pragma'=> 'no-cache'
+    ];
 
     return response()->withHeaders($headers)->setExpires(null);
 //    return \Illuminate\Http\Response::make('', 200, $headers);
@@ -56,10 +58,7 @@ Route::get('export/presenca', function(\Illuminate\Http\Request $request){
 
     $csvFileName = 'relatorio_'. Str::of($event->name)->snake() . '_presenca.csv';
 
-    $headers = [
-        'Content-Type' => 'text/csv',
-        'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
-    ];
+
 
 
     $handle = fopen('php://output', 'w');
@@ -119,6 +118,13 @@ Route::get('export/presenca', function(\Illuminate\Http\Request $request){
     }
 
     fclose($handle);
+
+    $headers = [
+        'Content-Type' => 'application/csv',
+        'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        'Expires'=>' 0',
+        'Pragma'=> 'no-cache'
+    ];
 
     return response()->withHeaders($headers)->setExpires(null);
 //    return Response::make('', 200, $headers);
