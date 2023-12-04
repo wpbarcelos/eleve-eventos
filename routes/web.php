@@ -20,7 +20,12 @@ Route::get('export/financeiro', function(\Illuminate\Http\Request $request){
     $headers = [
         'Content-Type' => 'text/csv',
         'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        'Expires'=>' 0',
+        'Pragma'=> 'no-cache'
     ];
+    header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    header("Pragma: no-cache"); // HTTP 1.0.
+    header("Expires: 0"); // Proxies.
 
     $handle = fopen('php://output', 'w');
     fputcsv($handle, ['Nome', 'Pago', 'Valor']); // Add more headers as needed
@@ -31,7 +36,8 @@ Route::get('export/financeiro', function(\Illuminate\Http\Request $request){
 
     fclose($handle);
 
-    return Response::make('', 200, $headers);
+    return response()->withHeaders($headers)->setExpires(null);
+//    return \Illuminate\Http\Response::make('', 200, $headers);
 
 });
 
@@ -114,6 +120,7 @@ Route::get('export/presenca', function(\Illuminate\Http\Request $request){
 
     fclose($handle);
 
-    return Response::make('', 200, $headers);
+    return response()->withHeaders($headers)->setExpires(null);
+//    return Response::make('', 200, $headers);
 
 });
