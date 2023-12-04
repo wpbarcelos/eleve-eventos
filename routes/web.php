@@ -18,9 +18,7 @@ Route::get('export/financeiro', function(\Illuminate\Http\Request $request){
     $csvFileName = 'relatorio_'. Str::of($event->name)->snake(). '_financeiro.csv';
 
 
-    header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-    header("Pragma: no-cache"); // HTTP 1.0.
-    header("Expires: 0"); // Proxies.
+
 
     $handle = fopen('php://output', 'w');
     fputcsv($handle, ['Nome', 'Pago', 'Valor']); // Add more headers as needed
@@ -32,14 +30,14 @@ Route::get('export/financeiro', function(\Illuminate\Http\Request $request){
     fclose($handle);
 
     $headers = [
-        'Content-Type' => 'text/csv',
-        'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        'Content-Type' => 'application/vnd.ms-excel',
+        'Content-Disposition' => 'attachment; filename=' . $csvFileName,
         'Expires'=>' 0',
-        'Pragma'=> 'no-cache'
+        'Pragma'=> 'must-revalidate',
+        'Cache-Control'=> 'must-revalidate'
     ];
 
-    return response()->withHeaders($headers)->setExpires(null);
-//    return \Illuminate\Http\Response::make('', 200, $headers);
+    return response('',200, $headers);
 
 });
 
@@ -120,13 +118,13 @@ Route::get('export/presenca', function(\Illuminate\Http\Request $request){
     fclose($handle);
 
     $headers = [
-        'Content-Type' => 'application/csv',
-        'Content-Disposition' => 'attachment; filename="' . $csvFileName . '"',
+        'Content-Type' => 'application/vnd.ms-excel',
+        'Content-Disposition' => 'attachment; filename=' . $csvFileName,
         'Expires'=>' 0',
-        'Pragma'=> 'no-cache'
+        'Pragma'=> 'must-revalidate',
+        'Cache-Control'=> 'must-revalidate'
     ];
 
-    return response()->withHeaders($headers)->setExpires(null);
-//    return Response::make('', 200, $headers);
+    return response('',200, $headers);
 
 });
