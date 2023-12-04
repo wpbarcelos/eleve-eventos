@@ -2,6 +2,8 @@
 
     {{ $this->form }}
 
+
+    <button>Exportar</button>
     @if($data['event_id'])
         <div class="p-3 text-end d-flex gap-3">
 

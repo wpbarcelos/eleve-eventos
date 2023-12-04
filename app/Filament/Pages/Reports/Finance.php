@@ -4,21 +4,17 @@ namespace App\Filament\Pages\Reports;
 
 use App\Models\Event;
 use App\Models\EventSubscribe;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\Summarizers\Count;
-use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -49,6 +45,19 @@ class Finance extends Page implements HasForms, HasTable
         return "Relatório Financeiro";
     }
 
+    public function getHeaderActions(): array
+    {
+        return [
+            \Filament\Actions\Action::make('Exportar')->url(function(){
+                $event_id = $this->data['event_id'];
+
+                $params = http_build_query( compact('event_id'));
+
+                return '/export/financeiro?' . $params;
+            })->disabled(fn()=>empty($this->data['event_id']))
+            ->openUrlInNewTab(true)
+        ];
+    }
 
     public function form(Form $form): Form
     {
@@ -69,9 +78,12 @@ class Finance extends Page implements HasForms, HasTable
                             ->live()
                             ->afterStateUpdated(fn() => $this->resetTable())
 
-                    ])->columns(2)
-            ])->statePath('data');
+                    ])->columns(2),
+
+            ])->statePath('data')
+            ;
     }
+
 
     public function table(Table $table)
     {

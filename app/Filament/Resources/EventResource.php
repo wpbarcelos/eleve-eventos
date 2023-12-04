@@ -77,8 +77,6 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->label('Nome'),
-                // Tables\Columns\TextColumn::make('description')
-                    // ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->money('BRL')
                     ->sortable()
@@ -97,13 +95,6 @@ class EventResource extends Resource
                     ->counts('subscribes')
                     ->label('Inscritos')
                     ->sortable()
-
-                // Tables\Columns\TextColumn::make('subscribe_start')
-                //     ->dateTime('d/m/Y')
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('subscribe_until')
-                //     ->dateTime('d/m/Y')
-                //     ->sortable(),
             ])
             ->filters([
                 //

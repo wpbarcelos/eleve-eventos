@@ -22,12 +22,12 @@ class EventSubscribeResource extends Resource
     protected static ?int $navigationSort = 2000;
 
     protected static ?string $navigationLabel = 'Inscritos';
+
     protected static ?string $label = 'Inscritos';
 
     protected static ?string $model = EventSubscribe::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
 
     public static function form(Form $form): Form
     {
@@ -99,12 +99,6 @@ class EventSubscribeResource extends Resource
                                 ])->columns(3)
                             ]),
 
-                        // Forms\Components\CheckboxList::make('celulas')
-                        //     ->relationship('celulas','name')
-                        //     ->label('Células')
-                        //     ->columnspan(2)
-                        //     ->columns(2)
-
                     ]),
                 Section::make()
                     ->description('Contato')
@@ -146,9 +140,6 @@ class EventSubscribeResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('date_birth')
-                //     ->date()
-                //     ->sortable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable()

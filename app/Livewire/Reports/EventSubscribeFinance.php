@@ -50,7 +50,7 @@ class EventSubscribeFinance extends Component implements HasForms, HasTable
 
     public function table(Table $table): Table
     {
-        Debugbar::info($this->data);
+//        Debugbar::info($this->data);
 
         return $table
             ->query(EventSubscribe::query()->with('event')
